@@ -9,5 +9,5 @@ registerRouter(server);
 // Activate webserver by calling .listen(port, callback);
 server
   .listen(80)
-  .then((socket) => logger.log('Webserver started on port 80'))
+  .then((socket) => logger.log('Webserver started on port 80', 'Application'))
   .catch((error) => logger.log('Failed to start webserver on port 80'));

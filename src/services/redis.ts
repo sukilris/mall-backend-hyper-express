@@ -1,6 +1,6 @@
 import Redis, { RedisKey } from 'ioredis';
-import { redisConfig } from 'src/config/redis';
 import { logger } from './logger';
+import { redisConfig } from 'configuration';
 
 const redisClient = new Redis(redisConfig);
 

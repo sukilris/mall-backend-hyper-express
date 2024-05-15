@@ -1,4 +1,4 @@
-import { loggerConfig } from 'src/config/logger';
+import { loggerConfig } from 'configuration';
 import { addColors, createLogger, format, transports } from 'winston';
 import 'winston-daily-rotate-file';
 
