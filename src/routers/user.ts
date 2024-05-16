@@ -3,6 +3,8 @@ import { buildShortUUID } from 'src/common/utils/uuid';
 import { UserLoginCaptchaCachePrefix } from 'src/constants/cache';
 import { redisService } from 'src/services/redis';
 import * as SvgCaptcha from 'svg-captcha';
+import { isEmpty } from 'lodash';
+import { ErrorEnum } from 'src/constants/errorx';
 
 export const registerUserRouter = (server: Server) => {
   const router = new Router();
@@ -32,6 +34,71 @@ export const registerUserRouter = (server: Server) => {
       verifyCode: `data:image/svg+xml;base64,${Buffer.from(svg.data).toString('base64')}`,
       captchaId,
     });
+  });
+
+  router.post('/login', async (request, response) => {
+    console.log(request);
+    const { captchaId, verifyCode, account, password } = request.body;
+    const captchaKey = `${UserLoginCaptchaCachePrefix}${captchaId}`;
+    const captcha = await redisService.get(captchaKey);
+    if (isEmpty(captcha) || verifyCode !== captcha) {
+      throw new Error(ErrorEnum.CODE_1022);
+    }
+
+    // // 查找用户账户
+    // const user = await this.entityManager.findOne(SysUserEntity, {
+    //   select: ['account', 'password', 'id', 'status', 'deptId'],
+    //   where: { account: account },
+    // });
+
+    // if (isEmpty(user)) {
+    //   throw new ApiFailedException(ErrorEnum.CODE_1022);
+    // }
+
+    // // 检查密码
+    // const encryPwd = this.generalService.generateUserPassword(dto.password);
+    // if (user.password !== encryPwd) {
+    //   throw new ApiFailedException(ErrorEnum.CODE_1022);
+    // }
+
+    // // 非超管判断用户禁用情况
+    // if (!this.generalService.isRootUser(user.id)) {
+    //   // 判断用户是否被禁用
+    //   if (user.status === StatusTypeEnum.Disable) {
+    //     throw new ApiFailedException(ErrorEnum.CODE_1024);
+    //   }
+
+    //   // 部门被禁用时无法使用
+    //   const deptEnable = await this.sysDeptRepo.findDeptEnableByid(user.deptId);
+
+    //   if (!deptEnable) {
+    //     throw new ApiFailedException(ErrorEnum.CODE_1024);
+    //   }
+    // }
+
+    // // 生成JWT Token
+    // const payload: IAuthUser = { uid: user.id };
+    // const token = this.jwtService.sign(payload);
+    // const onlineKey = `${UserOnlineCachePrefix}${user.id}`;
+
+    // // 设置Redis过期时间
+    // await this.redisService.set(
+    //   onlineKey,
+    //   token,
+    //   this.configService.jwtConfig.expires,
+    // );
+
+    // // 保存登录日志
+    // await this.entityManager.insert(SysLogEntity, {
+    //   userId: user.id,
+    //   status: StatusTypeEnum.Successful,
+    //   type: SysLogTypeEnum.Login,
+    //   ip,
+    //   uri,
+    //   request: JSON.stringify(omit(dto, 'password')),
+    // });
+
+    // return new UserLoginRespDto(token);
   });
 
   server.use('/user', router);
