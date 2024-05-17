@@ -13,7 +13,6 @@ registerRouter(server);
 // );
 
 server.use(async (request, response) => {
-  // You can also just return new Promise((resolve, reject) => {}); instead of async callback
   request.body = await request.json();
 });
 
