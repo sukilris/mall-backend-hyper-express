@@ -37,7 +37,7 @@ export const registerUserRouter = (server: Server) => {
   });
 
   router.post('/login', async (request, response) => {
-    console.log(request);
+    console.log(request.body);
     const { captchaId, verifyCode, account, password } = request.body;
     const captchaKey = `${UserLoginCaptchaCachePrefix}${captchaId}`;
     const captcha = await redisService.get(captchaKey);
