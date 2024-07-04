@@ -20,20 +20,6 @@ jwt:
   secret: kRZ3kA7LuB4LqOWi
   expires: 86400
 
-redis:
-  host: 34.217.47.15
-  port: 6379
-  password: 314159
-  db: 0
-
-db:
-  host: 34.217.47.15
-  port: 3306
-  username: root
-  password: '314159'
-  database: mall-test
-  logging: true
-
 swagger:
   enable: true
   path: documentation
