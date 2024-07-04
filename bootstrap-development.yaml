@@ -1,5 +1,3 @@
-NODE_ENV: development
-
 redis:
   host: 34.217.47.15
   port: 6379

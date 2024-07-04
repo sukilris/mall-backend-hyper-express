@@ -2,6 +2,9 @@ import { Server, Request, Response, express } from 'hyper-express';
 import { registerRouter } from 'src/routers';
 import { logger } from './services/logger';
 import * as cors from 'cors';
+import { db } from './db';
+
+db.initialize();
 
 const server = new Server();
 

@@ -14,6 +14,14 @@ type Config = {
     level: string;
     maxFiles: number;
   };
+  db: {
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
+    logging: boolean;
+  };
 };
 
 const YAML_CONFIG_FILENAME = 'bootstrap';
@@ -41,3 +49,5 @@ if (existsSync(envCfgPath)) {
 export const redisConfig = config.redis;
 
 export const loggerConfig = config.logger;
+
+export const dbConfig = config.db;
