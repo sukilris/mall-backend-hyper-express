@@ -1,3 +1,4 @@
+import { TimestampTransformer } from 'src/common/transformer/timestampTransformer';
 import { UserInfo } from 'src/common/user.entiry';
 import { Entity, Column, Index } from 'typeorm';
 
@@ -20,11 +21,21 @@ export class Request extends UserInfo {
   @Column({ type: 'varchar', length: 10, comment: '接口方法' })
   method: string;
 
-  @Column({ name: 'start_time', type: 'timestamp', comment: '开始时间' })
-  startTime: string;
+  @Column({
+    name: 'start_time',
+    type: 'timestamp',
+    transformer: new TimestampTransformer(),
+    comment: '开始时间',
+  })
+  startTime: number;
 
-  @Column({ name: 'end_time', type: 'timestamp', comment: '开始时间' })
-  endTime: string;
+  @Column({
+    name: 'end_time',
+    type: 'timestamp',
+    transformer: new TimestampTransformer(),
+    comment: '开始时间',
+  })
+  endTime: number;
 
   @Column({ type: 'int', unsigned: true, comment: '接口耗时' })
   duration: number;
