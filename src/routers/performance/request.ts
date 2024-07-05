@@ -25,5 +25,13 @@ export const registerRequestRouter = (server: Server) => {
     response.json({ code: 0, message: 'success', data: null });
   });
 
+  router.post('/request/page', async (request, response) => {
+    const { pageNum, pageSize } =
+      (await request.json()) as Common.Pagination & {};
+
+    const result = await requestRepository.find({});
+    response.json({ code: 0, message: 'success', data: null });
+  });
+
   server.use('/performance', router);
 };

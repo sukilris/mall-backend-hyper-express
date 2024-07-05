@@ -15,6 +15,12 @@ export abstract class UserInfo extends AbstractEntity {
   @Column({ type: 'varchar', length: 255, comment: '用户邮箱' })
   email: string;
 
+  @Column({
+    type: 'tinyint',
+    comment: '客户端标识：0-PC 1-PC-PWA 2-MOBILE 3-MOBILE-PWA 4-TMA',
+  })
+  mode: string;
+
   @Column({ type: 'varchar', length: 255, comment: 'User-Agent' })
   ua: string;
 
